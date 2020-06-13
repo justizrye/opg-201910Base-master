@@ -2,7 +2,48 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="text-left">
+        @*<h1 class="display-4">Welcome</h1>
+        <p>
+            @ViewData["Message"]
+        </p>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+
+        <h4 class="display-3">Client Files</h4>
+
+        @{ ClientSettings clientSettings = ViewData["ClientSettings"] as ClientSettings; }
+
+        <table class="table-info">
+            <tr>
+                <th>Client Id:</th>
+                <td>@clientSettings.ClientId</td>
+            </tr>
+            <tr>
+                <th>Name:</th>
+                <td>@clientSettings.Name</td>
+            </tr>
+        </table>
+        <br />
+        <table class="table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Filename</th>
+            </tr>
+            @{ IEnumerable<ClientFile> clientFiles = ViewData["ClientFiles"] as IEnumerable<ClientFile>;
+               var groupedClientFiles = clientFiles.GroupBy(c => new { c.SortIndex, c.Date })
+                                                    .OrderBy(c => c.Key.SortIndex);}
+
+            @foreach (var groupedClientFile in groupedClientFiles)
+            {
+                @foreach (ClientFile clientFile in groupedClientFile)
+                {
+                    <tr>
+                        <td>@clientFile.Name</td>
+                        <td>@clientFile.Date.ToShortDateString()</td>
+                        <td>@clientFile.Filename</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>

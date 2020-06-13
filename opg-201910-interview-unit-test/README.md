@@ -1,0 +1,1 @@
+Please copy all contents of "opg-201910Base-master\UploadFiles" to "opg-201910-interview-unit-test\bin\Debug\netcoreapp3.1" before running unit tests.
